@@ -1,0 +1,119 @@
+/* Nền mờ tối phía sau modal */
+.modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.4);
+  display: none;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+/* Nội dung chính của modal */
+.modal-content {
+  background-color: #fff;
+  padding: 40px;
+  border-radius: 12px;
+  width: 90%;
+  max-width: 900px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+  position: relative;
+}
+
+/* Nút đóng modal (x) */
+.close {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  font-size: 24px;
+  font-weight: bold;
+  color: #888;
+  cursor: pointer;
+}
+
+.close:hover {
+  color: #f00;
+}
+
+/* Tiêu đề modal */
+#employees-modal-title {
+  font-size: 24px;
+  font-weight: 600;
+  margin-bottom: 30px;
+}
+
+/* Layout các input: 3 cột */
+.form-group {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+  margin-bottom: 20px;
+}
+
+.form-field {
+  display: flex;
+  flex-direction: column;
+}
+
+/* Label và required dấu * */
+.form-field label {
+  font-weight: bold;
+  margin-bottom: 6px;
+}
+
+.required::after {
+  content: " *";
+  color: red;
+}
+
+/* Input và Select styling */
+.form-field input,
+.form-field select {
+  padding: 10px 12px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  font-size: 16px;
+  transition: border-color 0.3s;
+}
+
+.form-field input:focus,
+.form-field select:focus {
+  border-color: #28a745;
+  outline: none;
+}
+
+/* Button area */
+.form-actions {
+  grid-column: span 3;
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  margin-top: 20px;
+}
+
+/* Button styles */
+.btn {
+  padding: 10px 20px;
+  border: none;
+  font-weight: bold;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+.btn-cancel {
+  background-color: #dc3545;
+  color: white;
+}
+
+.btn-submit {
+  background-color: #28a745;
+  color: white;
+}
+
+.btn:hover {
+  opacity: 0.9;
+}

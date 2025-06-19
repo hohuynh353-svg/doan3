@@ -1,0 +1,188 @@
+body,
+html {
+  margin: 0;
+  padding: 0;
+  font-family: Arial, sans-serif;
+  background-color: #e0e0e0;
+  color: #093010;
+}
+/* top-bar */
+/* Thiết lập chung */
+body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+}
+
+/* ***** */
+/* css cho thanh đầu tiên  */
+.header-bar {
+  background: linear-gradient(135deg, #facc41);
+  color: #000000;
+  padding: 10px 0;
+  font-size: 14px;
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+.header-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.header-left {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.header-center {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.header-right {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.location-info {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.location-info i {
+  font-size: 16px;
+}
+
+.auth-links {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.auth-links a {
+  font-weight: bold;
+  color: #000000;
+  text-decoration: none;
+  transition: opacity 0.3s ease;
+}
+
+.auth-links a:hover {
+  color: #dd0000; /* Màu mới khi rê chuột vào */
+  transition: color 0.3s ease;
+  opacity: 0.8;
+}
+
+.divider {
+  color: #000000;
+}
+
+.contact-info {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.contact-item {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.contact-item a {
+  color: #000000;
+  text-decoration: none;
+  transition: opacity 0.3s ease;
+}
+
+.contact-item a:hover {
+  opacity: 0.8;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .header-content {
+    flex-direction: column;
+    gap: 10px;
+    text-align: center;
+  }
+
+  .header-left,
+  .header-center,
+  .header-right {
+    width: 100%;
+    justify-content: center;
+  }
+
+  .contact-info {
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .header-bar {
+    padding: 15px 0;
+  }
+}
+
+@media (max-width: 480px) {
+  .contact-info {
+    gap: 8px;
+  }
+
+  .contact-item {
+    font-size: 12px;
+  }
+
+  .location-info {
+    font-size: 12px;
+  }
+}
+/* ***** */
+/* narbar */
+.navbar {
+  background-color: #f3eeee !important;
+}
+/* logo  */
+
+.navbar-brand img {
+  width: 60px;
+  height: 50px;
+  transition: width 0.3s ease;
+}
+
+/*footer*/
+/*map*/
+.contact-content-right {
+  width: 100%; /* Đảm bảo phần chứa bản đồ không vượt quá khung */
+  max-width: 400px; /* Giới hạn chiều rộng tối đa */
+}
+
+.map {
+  width: 100%;
+  height: 400px; /* Đảm bảo chiều cao cố định */
+  overflow: hidden; /* Ngăn bản đồ tràn ra ngoài */
+  border-radius: 10px; /* Bo góc nhẹ */
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1); /* Đổ bóng nhẹ */
+}
+
+.map iframe {
+  width: 100%;
+  height: 100%;
+  border: none;
+  border-radius: 10px;
+}
+/*footer*/
+.container {
+  margin-bottom: 0; /* Loại bỏ khoảng cách dưới */
+}
+/* ***** */

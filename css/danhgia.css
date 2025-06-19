@@ -1,0 +1,379 @@
+:root {
+  --primary-color: #4caf50;
+  --secondary-color: #2e7d32;
+  --accent-color: #8bc34a;
+  --text-color: #333;
+  --light-gray: #f5f5f5;
+  --white: #fff;
+  --shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+}
+
+body {
+  background-color: var(--light-gray);
+  color: var(--text-color);
+  line-height: 1.6;
+}
+
+.header-top {
+  background-color: var(--white);
+  box-shadow: var(--shadow);
+  padding: 1rem 2rem;
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+}
+
+.main {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.review-container {
+  max-width: 1200px;
+  margin: 2rem auto;
+  padding: 0 1rem;
+}
+
+.review-header {
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.review-header h1 {
+  color: var(--secondary-color);
+  margin-bottom: 0.5rem;
+}
+
+.review-header p {
+  color: #666;
+}
+
+.review-content {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2rem;
+}
+
+.tour-info-card {
+  flex: 1 1 300px;
+  background: var(--white);
+  border-radius: 8px;
+  box-shadow: var(--shadow);
+  padding: 1.5rem;
+  margin-bottom: 2rem;
+}
+
+.tour-info-card h2 {
+  color: var(--secondary-color);
+  margin-bottom: 1rem;
+  border-bottom: 2px solid var(--accent-color);
+  padding-bottom: 0.5rem;
+}
+
+.tour-details p {
+  margin-bottom: 0.5rem;
+  display: flex;
+  justify-content: space-between;
+}
+
+.tour-details strong {
+  color: var(--secondary-color);
+}
+
+.review-form-card {
+  flex: 2 1 600px;
+  background: var(--white);
+  border-radius: 8px;
+  box-shadow: var(--shadow);
+  padding: 1.5rem;
+  max-width: 850px; /* hoặc 400px */
+  margin: 0 auto; /* để căn giữa khi co lại */
+}
+
+.review-form h2 {
+  color: var(--secondary-color);
+  margin-bottom: 1.5rem;
+  text-align: center;
+}
+
+.form-group {
+  margin-bottom: 1.5rem;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 0.5rem;
+  font-weight: 600;
+}
+
+.form-control {
+  width: 100%;
+  padding: 0.75rem;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  font-size: 1rem;
+  transition: border-color 0.3s;
+}
+
+.form-control:focus {
+  border-color: var(--primary-color);
+  outline: none;
+}
+
+textarea.form-control {
+  height: 170px;
+  resize: none;
+}
+
+.rating-container {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+}
+
+.rating-stars {
+  display: flex;
+  flex-direction: row-reverse; /* để hiển thị sao 5 bên trái */
+}
+
+.rating-stars input {
+  display: none;
+}
+
+.rating-stars label {
+  font-size: 2rem;
+  color: #ccc;
+  cursor: pointer;
+  transition: color 0.2s;
+}
+
+.rating-stars input:checked ~ label,
+.rating-stars label:hover,
+.rating-stars label:hover ~ label {
+  color: #ffc107;
+}
+
+.rating-stars input:checked + label {
+  color: #ffc107;
+}
+
+.form-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 1rem;
+  margin-top: 2rem;
+}
+
+.btn {
+  padding: 0.75rem 1.5rem;
+  border: none;
+  border-radius: 4px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.btn-primary {
+  background-color: var(--primary-color); /* màu xanh */
+  color: white;
+}
+
+.btn-primary:hover {
+  background-color: var(--secondary-color); /* xanh đậm hơn */
+}
+
+.btn-secondary {
+  background-color: #f44336; /* đỏ */
+  color: white;
+}
+
+.btn-secondary:hover {
+  background-color: #d32f2f; /* đỏ đậm hơn */
+}
+
+.review-guidelines {
+  background-color: #f8f9fa;
+  border-left: 4px solid var(--accent-color);
+  padding: 1rem;
+  margin: 1.5rem 0;
+}
+
+.review-guidelines h3 {
+  color: var(--secondary-color);
+  margin-bottom: 0.5rem;
+}
+
+.review-guidelines ul {
+  padding-left: 1.5rem;
+}
+
+.review-guidelines li {
+  margin-bottom: 0.5rem;
+}
+
+footer {
+  background-color: #333;
+  color: white;
+  padding: 2rem 0;
+  margin-top: 3rem;
+}
+
+.footer-content {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 2rem;
+  padding: 0 1rem;
+}
+
+.footer-section h4 {
+  margin-bottom: 1rem;
+  font-size: 1.2rem;
+  color: var(--accent-color);
+}
+
+.footer-section.about p {
+  margin-bottom: 1rem;
+}
+
+.footer-section.links ul {
+  list-style: none;
+}
+
+.footer-section.links li {
+  margin-bottom: 0.5rem;
+}
+
+.footer-section.links a {
+  color: white;
+  text-decoration: none;
+  transition: color 0.3s;
+}
+
+.footer-section.links a:hover {
+  color: var(--accent-color);
+}
+
+.footer-section.contact p {
+  margin-bottom: 0.5rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.footer-section.social .social-links {
+  display: flex;
+  gap: 1rem;
+}
+
+.footer-section.social a {
+  color: white;
+  font-size: 1.5rem;
+  transition: color 0.3s;
+}
+
+.footer-section.social a:hover {
+  color: var(--accent-color);
+}
+
+.footer-bottom {
+  text-align: center;
+  padding-top: 1rem;
+  margin-top: 1rem;
+  border-top: 1px solid #444;
+}
+
+@media (max-width: 768px) {
+  .review-content {
+    flex-direction: column;
+  }
+}
+.previous-reviews {
+  margin-top: 3rem;
+  background-color: #f9f9f9;
+  padding: 2rem;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.previous-reviews h2 {
+  color: #2e7d32;
+  margin-bottom: 1.5rem;
+  text-align: center;
+}
+
+.review-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 1.5rem;
+}
+
+.review-item {
+  background: white;
+  padding: 1.5rem;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.review-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+.review-author {
+  font-weight: bold;
+  color: #333;
+}
+
+.review-date {
+  color: #666;
+  font-size: 0.9rem;
+}
+
+.review-rating {
+  color: #ffc107;
+  margin: 0.5rem 0;
+}
+
+.review-title {
+  font-weight: bold;
+  margin-bottom: 0.5rem;
+  color: #2e7d32;
+}
+
+.review-content {
+  color: #555;
+  line-height: 1.6;
+}
+
+.review-images {
+  display: flex;
+  gap: 0.5rem;
+  margin-top: 1rem;
+  overflow-x: auto;
+}
+
+.review-image {
+  width: 80px;
+  height: 80px;
+  object-fit: cover;
+  border-radius: 4px;
+}
+
+.no-reviews {
+  text-align: center;
+  color: #666;
+  padding: 2rem;
+  grid-column: 1 / -1;
+}
