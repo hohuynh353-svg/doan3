@@ -465,7 +465,7 @@ if (!isset($_SESSION['role']) || $_SESSION['role'] !== 'admin') {
     <div class="modal-content">
         <span class="close" onclick="closeStaffModal()">&times;</span>
         <h3 id="staff-modal-title"> Nhân Viên </h3>
-        <form id="staffForm">
+        <form id="staffForm"  >
             <input type="hidden" id="staff-id">
 
             <div class="form-group">
@@ -501,7 +501,7 @@ if (!isset($_SESSION['role']) || $_SESSION['role'] !== 'admin') {
   <div class="modal-content">
     <span class="close" onclick="closeEmployeesModal()">&times;</span>
     <h3 id="employees-modal-title">Thêm Nhân Viên Mới</h3>
-    <form id="employeesForm">
+    <form id="employeesForm" >
       <input type="hidden" id="employees-id" />
 
       <div class="form-group">
@@ -854,6 +854,8 @@ function checkIfLienHeCleared() {
   }
 }
 </script>
+
+
 
 
 </body>

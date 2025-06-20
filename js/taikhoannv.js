@@ -32,7 +32,12 @@ async function postNhanVien(data) {
       },
       body: new URLSearchParams(data),
     });
-    return await response.json();
+
+    const text = await response.text();
+    console.log("PHẢN HỒI TỪ SERVER:", text); // Log để kiểm tra
+
+    // Chuyển đổi JSON nếu hợp lệ
+    return JSON.parse(text);
   } catch (error) {
     return { success: false, error: error.message };
   }
