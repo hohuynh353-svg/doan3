@@ -2,7 +2,7 @@
 function loadCustomers() {
   document.getElementById("customers-loading").classList.remove("hidden");
 
-  fetch("danhsachKH.php", {
+  fetch("../php/danhsachKH.php", {
     method: "POST",
     headers: {
       "Content-Type": "application/x-www-form-urlencoded",
@@ -26,31 +26,30 @@ function displayCustomers(customers) {
 
   customers.forEach((customer) => {
     const row = `
-            <tr>
-                <td>${customer.id}</td>
-                <td>${customer.hoten}</td>
-                <td>${customer.email}</td>
-                <td>${customer.sdt}</td>
-                <td>${customer.diemtichluy} điểm</td>
-                <td>${new Date(customer.created_at).toLocaleDateString(
-                  "vi-VN"
-                )}</td>
-                <td>
-                    <button class="btn btn-success" onclick="editCustomer(${
-                      customer.id
-                    }, '${customer.hoten}', '${customer.email}', '${
-      customer.sdt
-    }')">
-                        <i class="fas fa-edit"></i> Sửa
-                    </button>
-                    <button class="btn btn-danger" onclick="deleteCustomer(${
-                      customer.id
-                    })">
-                        <i class="fas fa-trash"></i> Xóa
-                    </button>
-                </td>
-            </tr>
-        `;
+      <tr>
+        <td>${customer.id}</td>
+        <td>${customer.hoten}</td>
+        <td>${customer.email}</td>
+        <td>${customer.sdt}</td>
+        <td>${customer.diemtichluy} điểm</td>
+        <td>${new Date(customer.created_at).toLocaleDateString("vi-VN")}</td>
+        <td>
+          <button class="btn btn-success" onclick="editCustomer(
+            ${customer.id},
+            '${customer.hoten}',
+            '${customer.email}',
+            '${customer.sdt}'
+          )">
+            <i class="fas fa-edit"></i> Sửa
+          </button>
+          <button class="btn btn-danger" onclick="deleteCustomer(${
+            customer.id
+          })">
+            <i class="fas fa-trash"></i> Xóa
+          </button>
+        </td>
+      </tr>
+    `;
     tbody.innerHTML += row;
   });
 }
@@ -59,9 +58,9 @@ function openAddCustomerModal() {
   document.getElementById("modal-title").textContent = "Thêm Khách Hàng Mới";
   document.getElementById("customerForm").reset();
   document.getElementById("customer-id").value = "";
-  document.getElementById("password-group").style.display = "block";
+  document.getElementById("password-group").classList.remove("hidden");
   document.getElementById("customer-matkhau").required = true;
-  document.getElementById("customerModal").style.display = "block";
+  document.getElementById("customerModal").classList.remove("hidden");
 }
 
 function editCustomer(id, hoten, email, sdt) {
@@ -71,18 +70,18 @@ function editCustomer(id, hoten, email, sdt) {
   document.getElementById("customer-hoten").value = hoten;
   document.getElementById("customer-email").value = email;
   document.getElementById("customer-sdt").value = sdt;
-  document.getElementById("password-group").style.display = "none";
+  document.getElementById("password-group").classList.add("hidden");
   document.getElementById("customer-matkhau").required = false;
-  document.getElementById("customerModal").style.display = "block";
+  document.getElementById("customerModal").classList.remove("hidden");
 }
 
 function closeCustomerModal() {
-  document.getElementById("customerModal").style.display = "none";
+  document.getElementById("customerModal").classList.add("hidden");
 }
 
 function deleteCustomer(id) {
   if (confirm("Bạn có chắc muốn xóa khách hàng này?")) {
-    fetch("danhsachKH.php", {
+    fetch("../php/danhsachKH.php", {
       method: "POST",
       headers: {
         "Content-Type": "application/x-www-form-urlencoded",
@@ -98,7 +97,7 @@ function deleteCustomer(id) {
           alert("Xóa thất bại!");
         }
       })
-      .catch((error) => {
+      .catch(() => {
         alert("Lỗi khi xóa khách hàng");
       });
   }
@@ -130,18 +129,15 @@ document
           closeCustomerModal();
           loadCustomers();
         } else {
-          alert("Lỗi khi lưu thông tin khách hàng");
+          alert(data.error || "Lỗi khi lưu thông tin khách hàng");
         }
-      })
-      .catch((error) => {
-        alert("Lỗi khi gửi dữ liệu");
       });
   });
 
-// Đóng modal nếu click ngoài
+// Đóng modal khi click ngoài
 window.onclick = function (event) {
   const modal = document.getElementById("customerModal");
-  if (event.target == modal) {
+  if (event.target === modal) {
     closeCustomerModal();
   }
 };

@@ -244,7 +244,7 @@ if ($row_count = $result_count->fetch_assoc()) {
     <!-- Quảng cáo -->
     <div style="flex: 2;">
   <div style="border: 1px solid #ccc; padding: 15px; border-radius: 10px; text-align: center; height: 800px; width: 400px">
-    <img src="../img/quangcao.jpg"
+    <img src="../img2/quangcao.jpg"
          style="height: 100%; width: 100%; border-radius: 8px; object-fit: cover;" 
          alt="Ảnh quảng cáo sản phẩm" />
   </div>

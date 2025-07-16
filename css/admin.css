@@ -139,7 +139,13 @@ tr:hover {
 
 /* Modal */
 .modal {
+  display: flex; /* hoặc block, tùy bạn */
+}
+.modal.hidden {
   display: none;
+}
+
+.modal {
   position: fixed;
   z-index: 1000;
   left: 0;
@@ -199,17 +205,10 @@ tr:hover {
   color: #000;
 }
 
-.hidden {
-  display: none;
-}
-
 .loading {
   text-align: center;
   padding: 50px;
   color: #666;
-}
-.hidden {
-  display: none;
 }
 
 .search-box {
@@ -235,4 +234,78 @@ tr:hover {
 
 .search-box button i {
   font-size: 14px;
+}
+/* ///////////////////////////////////////////////////////////// */
+.hidden {
+  display: none !important;
+}
+
+/* Search box */
+.search-box {
+  display: flex;
+  align-items: center;
+  border: 2px solid #ccc;
+  border-radius: 25px;
+  overflow: hidden;
+  width: 250px;
+  background-color: white;
+}
+
+.search-box input[type="text"] {
+  border: none;
+  outline: none;
+  padding: 10px 15px;
+  flex: 1;
+  font-size: 14px;
+  border-radius: 25px 0 0 25px;
+}
+
+.search-box button {
+  border: none;
+  background-color: #28a745;
+  color: white;
+  padding: 10px 15px;
+  cursor: pointer;
+  border-radius: 0 25px 25px 0;
+  transition: background-color 0.3s ease;
+}
+
+.search-box button:hover {
+  background-color: rgb(19, 111, 24);
+}
+
+.search-box i {
+  font-size: 16px;
+}
+
+#searchTour::placeholder {
+  font-style: italic;
+}
+
+/* Menu */
+.menu-item a,
+.menu-item a:visited {
+  color: white !important;
+  text-decoration: none;
+}
+
+.menu-item {
+  list-style: none;
+}
+
+/* Buttons */
+.btn {
+  padding: 10px 15px;
+  border: none;
+  border-radius: 4px;
+  font-size: 14px;
+  cursor: pointer;
+}
+.btn-success {
+  background-color: #28a745;
+  color: white;
+}
+.btn-danger {
+  background-color: #dc3545;
+  color: white;
 }

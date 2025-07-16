@@ -1,0 +1,41 @@
+.order-status {
+  padding: 6px 12px;
+  border-radius: 8px;
+  font-size: 14px;
+  border: none;
+  outline: none;
+  font-weight: bold;
+  transition: 0.2s;
+}
+.order-status.pending {
+  background-color: #fff3cd;
+  color: #856404;
+}
+.order-status.confirmed {
+  background-color: #d1ecf1;
+  color: #0c5460;
+}
+.order-status.shipping {
+  background-color: #d4edda;
+  color: #155724;
+}
+.order-status.success {
+  background-color: #c3e6cb;
+  color: #155724;
+}
+.order-status.cancelled {
+  background-color: #f8d7da;
+  color: #721c24;
+}
+
+.btn.btn-info {
+  background-color: #17a2b8;
+  color: white;
+  padding: 5px 10px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+}
+.btn.btn-info:hover {
+  background-color: #138496;
+}

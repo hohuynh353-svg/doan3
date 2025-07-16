@@ -55,118 +55,40 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Form Đăng Nhập</title>
-    <style>
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
-            background-color: #e9ecef;
-            margin: 0;
-        }
-        .form-container {
-            background-color: #fff;
-            padding: 30px;
-            border-radius: 10px;
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
-            width: 100%;
-            max-width: 400px;
-        }
-        .form-container h2 {
-            text-align: center;
-            color: #333;
-            margin-bottom: 20px;
-        }
-        .form-group {
-            margin-bottom: 20px;
-        }
-        .form-group label {
-            display: block;
-            font-weight: bold;
-            color: #555;
-            margin-bottom: 8px;
-        }
-        .form-group input {
-            width: 100%;
-            padding: 10px;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-            font-size: 16px;
-            box-sizing: border-box;
-            transition: border-color 0.3s;
-        }
-        .form-group input:focus {
-            border-color: #007bff;
-            outline: none;
-        }
-        .form-group input:invalid:focus:not(:placeholder-shown) {
-            border-color: #dc3545;
-        }
-        .form-group button {
-            width: 100%;
-            padding: 12px;
-            background-color: #007bff;
-            color: #fff;
-            border: none;
-            border-radius: 5px;
-            font-size: 16px;
-            cursor: pointer;
-            transition: background-color 0.3s;
-        }
-        .form-group button:hover {
-            background-color: #0056b3;
-        }
-        .error-message {
-            color: #dc3545;
-            font-size: 14px;
-            margin-top: 5px;
-            display: none;
-        }
-        .register-link {
-            text-align: center;
-            font-size: 14px;
-            color: #007bff;
-            margin-top: 10px;
-        }
-        .register-link a {
-            color: #007bff;
-            text-decoration: none;
-        }
-        .register-link a:hover {
-            text-decoration: underline;
-        }
-        @media (max-width: 480px) {
-            .form-container {
-                padding: 20px;
-                margin: 10px;
-            }
-        }
-    </style>
+  <link rel="stylesheet" href="../css/dangnhap.css">
 </head>
 <body>
     
     <div class="form-container">
-        <h2>Đăng Nhập</h2>
-        <form action="dangnhap.php" method="POST" onsubmit="return validateLoginForm()">
-            <div class="form-group">
-                <label for="email">Email:</label>
-                <input type="email" id="email" name="email" required placeholder="Nhập email">
-                <span class="error-message" id="email-error">Email không hợp lệ</span>
-            </div>
-            <div class="form-group">
-                <label for="matkhau">Mật Khẩu:</label>
-                <input type="password" id="matkhau" name="matkhau" required placeholder="Nhập mật khẩu">
-                <span class="error-message" id="password-error">Mật khẩu không được để trống</span>
-            </div>
-            <div class="form-group">
-                <button type="submit">Đăng Nhập</button>
-            </div>
-            <div class="register-link">
-                Nếu bạn chưa có tài khoản, hãy <a href="dangki.php">đăng ký</a>
-            </div>
-        </form>
-    </div>
+        <div class="close-btn" onclick="window.location.href='index.php'">X</div>
+
+
+    <h2>Đăng Nhập</h2>
+    <p>Chào mừng bạn trở lại</p>
+    <form action="dangnhap.php" method="POST" onsubmit="return validateLoginForm()">
+      <div class="form-group">
+        <label for="email">Email:</label>
+        <input type="email" id="email" name="email" required placeholder="Nhập email">
+        <span class="error-message" id="email-error">Email không hợp lệ</span>
+      </div>
+
+      <div class="form-group">
+        <label for="matkhau">Mật Khẩu:</label>
+        <input type="password" id="matkhau" name="matkhau" required placeholder="Nhập mật khẩu">
+        <span class="error-message" id="password-error">Mật khẩu không được để trống</span>
+      </div>
+
+      <div class="forgot-password">
+        <a href="quenmatkhau.php">Quên mật khẩu?</a>
+      </div>
+
+      <button type="submit">ĐĂNG NHẬP</button>
+
+      <div class="register-link">
+        Nếu bạn chưa có tài khoản, hãy <a href="dangki.php">Đăng ký ngay</a>
+      </div>
+    </form>
+  </div>
 
     <script>
         function validateLoginForm() {

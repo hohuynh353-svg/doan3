@@ -1,4 +1,5 @@
- 
+
+
 
 <!DOCTYPE html>
 <html lang="en">
@@ -47,15 +48,6 @@
                     </div>
                 </div>
 
-                <!-- Center: Auth Links 
-                 <div class="header-center">
-                    <div class="auth-links">
-                        <a href="dangki.php">Đăng ký</a>
-                        <span class="divider">|</span>
-                        <a href="dangnhap.php">Đăng nhập</a>
-                    </div>
-                </div>
-                -->
                 
                 <div class="box-center" style="font-weight: bold;">
                     <?php
@@ -90,117 +82,108 @@
         </div>
     </div>
 
-      <nav class="small navbar navbar-expand-lg border-bottom sticky-top  ">
-        <div class="container">
-          <a class="navbar-brand" href="index.php">
-            <img src="../img/logo.png" alt="Bootstrap" />
+<nav class="small navbar navbar-expand-lg border-bottom sticky-top">
+  <div class="container position-relative">
+    
+    <!-- Logo -->
+    <a class="navbar-brand" href="index.php">
+      <img src="../img2/logo.png" alt="Bootstrap" />
+    </a>
+
+    <!-- Nút mở menu khi thu nhỏ -->
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+            data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+            aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <!-- Nội dung navbar -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      
+      <!-- Menu chính -->
+      <ul class="navbar-nav mb-2 mb-lg-0">
+        <li class="nav-item">
+          <a class="nav-link active" aria-current="page" href="index.php">Trang Chủ</a>
+        </li>
+
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle fw-bold" href="#" role="button" data-bs-toggle="dropdown"
+             aria-expanded="false">
+            Thực Đơn 
           </a>
-          <button
-            class="navbar-toggler"
-            type="button"
-            data-bs-toggle="collapse"
-            data-bs-target="#navbarSupportedContent"
-            aria-controls="navbarSupportedContent"
-            aria-expanded="false"
-            aria-label="Toggle navigation"
-          >
-            <span class="navbar-toggler-icon"></span>
+          <ul class="dropdown-menu">
+  <li><a class="dropdown-item" href="index.php?madanhmuc=1">🍚 Cơm</a></li>
+  <li><a class="dropdown-item" href="index.php?madanhmuc=2">🍜 Mì – Hủ tiếu – Bún</a></li>
+  <li><a class="dropdown-item" href="index.php?madanhmuc=3">🍛 Món Kho</a></li>
+  <li><a class="dropdown-item" href="index.php?madanhmuc=4">🍲 Món Canh</a></li>
+  <li><a class="dropdown-item" href="index.php?madanhmuc=5">🥬 Món Chay</a></li>
+</ul>
+
+        </li>
+
+        <li class="nav-item">
+          <a class="nav-link active fw-bold" href="index.php">Đặt Món</a>
+        </li>
+
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
+             aria-expanded="false">
+            Giới Thiệu
+          </a>
+          <ul class="dropdown-menu">
+            <li><a class="dropdown-item" href="vechungtoi.php">Về chúng tôi</a></li>
+            <li><a class="dropdown-item" href="chinhsachnguoisohuu.php">Chính sách</a></li>
+          </ul>
+        </li>
+
+        <li class="nav-item">
+          <a class="nav-link active" href="lienhe.php">Liên Hệ</a>
+        </li>
+
+        <li class="nav-item">
+          <a class="nav-link active" href="trang_danhgia.php">Đánh giá</a>
+        </li>
+      </ul>
+
+      <!-- Thanh tìm kiếm + nút ưu đãi (căn phải) -->
+      
+        
+        <!-- Thanh tìm kiếm -->
+        <div class="search-bar">
+          <input type="text" class="search-input" placeholder="Tìm kiếm...">
+          <button class="search-btn">
+            <i class="fas fa-search"></i>
           </button>
-
-          <div class="collapse navbar-collapse" id="navbarSupportedContent">
-            <!--menu item-->
-            <ul class="navbar-nav mb-2 mb-lg-0">
-              <li class="nav-item">
-                <a class="nav-link active" aria-current="page" href="index.php"
-                  >Trang Chủ
-                </a>
-              </li>
-              <li class="nav-item dropdown">
-                <a
-                  class="nav-link dropdown-toggle fw-bold"
-                  href="#"
-                  role="button"
-                  data-bs-toggle="dropdown"
-                  aria-expanded="false"
-                >
-                  Thực Đơn 
-                </a>
-                <ul class="dropdown-menu">
-                
-                  <li><a href="index.php?temp=suaruamat">🧴Cơm </a></li>
-                  <li><a href="index.php?temp=kemchongnang">🌞 Mì-Hủ tiếu-Bún </a></li>
-                  <li><a href="index.php?temp=trangdiemmoi">👄Món Kho </a></li>
-                  <li><a href="index.php?temp=kemchongnang">🌞 Món Canh </a></li>
-                  <li><a href="index.php?temp=trangdiemmoi">👄Món Chay </a></li>
-                </ul>
-              </li>
-               <li class="nav-item">
-                <a class="nav-link active" aria-current="page" href="index.php"
-                  >Đặt Món 
-                </a>
-              </li>
-              <li class="nav-item dropdown">
-                <a
-                  class="nav-link dropdown-toggle"
-                  href="#"
-                  role="button"
-                  data-bs-toggle="dropdown"
-                  aria-expanded="false"
-                >
-                  Giới Thiệu
-                </a>
-                <ul class="dropdown-menu">
-                  <li><a class="dropdown-item" href="vechungtoi.php">Về chúng tôi </a></li>
-                  <li><a class="dropdown-item" href="chinhsachnguoisohuu.php">Chính sách  </a></li>
-                   
-                </ul>
-              </li>
-               
-               <li class="nav-item">
-                <a class="nav-link active" aria-current="page" href="lienhe.php"
-                  >Liên Hệ 
-                </a>
-              </li>
-
-              <li class="nav-item">
-                <a class="nav-link active" aria-current="page" href="trang_danhgia.php"
-                  >Đánh giá 
-                </a>
-              </li>
-            </ul>
-            
-
-            <!--fromsearch -->
-
-            <form class="d-flex mx-auto ms-5 search-bar" action="timkiemsp.php" method="GET" role="search">
-              <input
-                 name="keyword"
-                class="form-control me-0 search-input"
-                type="search"
-                placeholder="Tìm kiếm..."
-                aria-label="Search"
-              />
-              <button class="btn btn-success search-btn" type="submit">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="18px "
-                  height="18px "
-                  viewBox="0 0 512 512"
-                >
-                  <!--!Font Awesome Free 6.7.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2025 Fonticons, Inc.-->
-                  <path
-                    fill="#ffffff"
-                    d="M416 208c0 45.9-14.9 88.3-40 122.7L502.6 457.4c12.5 12.5 12.5 32.8 0 45.3s-32.8 12.5-45.3 0L330.7 376c-34.4 25.2-76.8 40-122.7 40C93.1 416 0 322.9 0 208S93.1 0 208 0S416 93.1 416 208zM208 352a144 144 0 1 0 0-288 144 144 0 1 0 0 288z"
-                  />
-                </svg>
-              </button>
-            </form>
-
-            <!--gio hang dang nhap yeu thich -->
-            
-          </div>
         </div>
-      </nav>
+
+        
+      
+
+    </div> <!-- kết thúc .navbar-collapse -->
+
+  </div> <!-- kết thúc .container -->
+  <!-- Nút đăng ký -->
+<div class="btn-wrapper flash-btn-fixed">
+  <?php if (!isset($_SESSION['user_id'])): ?>
+    <!-- Chưa đăng nhập: Hiện nút đăng ký -->
+    <a href="dangki.php" class="flash-btn" style="display: inline-block; text-align: center; text-decoration: none;">
+      🎁 ĐĂNG KÝ NHẬN ƯU ĐÃI<br>
+    </a>
+  <?php else: ?>
+    <!-- Đã đăng nhập: Hiện tên người dùng -->
+    <a href="taikhoannguoidung.php" class="flash-btn" style="display: inline-block; text-align: center; text-decoration: none;">
+      👤 <?= htmlspecialchars($_SESSION['hoten']) ?>
+    </a>
+  <?php endif; ?>
+</div>
+
+
+
+</nav>
+
+<!-- Font Awesome cho icon tìm kiếm -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
    
 
     <header>
@@ -214,10 +197,10 @@
                 <div class="carousel-inner">
                     
                     <div class="carousel-item active" data-bs-interval="3000">
-                        <img src="../img/banner1.png" class="d-block w-100" alt="Banner 2" />
+                        <img src="../img2/banner1.png" class="d-block w-100" alt="Banner 2" />
                     </div>
                     <div class="carousel-item" data-bs-interval="3000">
-                        <img src="../img/banner2.png" class="d-block w-100" alt="Banner 3" />
+                        <img src="../img2/banner2.png" class="d-block w-100" alt="Banner 3" />
                     </div>
                 </div>
                 <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
@@ -231,9 +214,96 @@
             </div>
         </div>
     </div>
-    
-   </header>
 
+   </header>
+  
+
+
+<section class="menu2-section">
+  <h2 class="menu2-title">Lựa chọn thực đơn</h2>
+  <div class="menu2-options">
+    <div class="menu2-item">
+      <img src="../img2/com7.png" alt="Cơm" />
+      <p>🍚 Cơm</p>
+    </div>
+    <div class="menu2-item">
+      <img src="../img2/bun1.png" alt="Mì – Hủ tiếu – Bún" />
+      <p>🍜 Mì – Hủ tiếu – Bún</p>
+    </div>
+    <div class="menu2-item">
+      <img src="../img2/monkho1.png" alt="Món Kho" />
+      <p>🍛 Món Kho</p>
+    </div>
+    <div class="menu2-item">
+      <img src="../img2/canh5.png" alt="Món Canh" />
+      <p>🍲 Món Canh</p>
+    </div>
+    <div class="menu2-item">
+      <img src="../img2/monchay4.png" alt="Món Chay" />
+      <p>🥬 Món Chay</p>
+    </div>
+  </div>
+</section>
+
+<!-- Quảng cáo ưu đãi -->
+<section class="promo-banner">
+  <img src="../img2/dangki.png" alt="Ưu đãi tích điểm" />
+</section>
+
+
+
+
+
+
+<section class="services-section">
+         <div style="height: 1px; background-color: #FF0000; margin-top: -30px;  margin-bottom: 20px;"></div>
+  <h2 class="section-title">CUNG CẤP SUẤT ĂN VĂN PHÒNG & CÔNG NGHIỆP</h2>
+  <div class="services-grid">
+    <div class="service-card highlight">
+      <img src="../img2/thucdon.png" alt="Thực đơn cơm" class="service-icon" />
+      <h3>Thực đơn cơm văn phòng</h3>
+      <p>Thực đơn cơm văn phòng được các đầu bếp có tay nghề, uyên thâm trong lĩnh vực cơm văn phòng chế biến</p>
+      <a href="#" class="detail-link">Chi tiết</a>
+    </div>
+
+    <div class="service-card highlight">
+      <img src="../img2/giaohang.png" alt="Giao cơm" class="service-icon" />
+      <h3>Dịch vụ giao cơm tận nơi</h3>
+      <p>Giao cơm tận nơi là trách nhiệm của chúng tôi, mọi ưu tiên về quyền lợi và sự hài lòng của khách hàng là tiêu chí của chúng tôi</p>
+      <a href="dichvugiaocom.php" class="detail-link">Chi Tiết</a>
+    </div>
+
+    <div class="service-card highlight ">
+      <img src="../img2/nguyenlieu.png" alt="Nguyên liệu tươi" class="service-icon" />
+      <h3>Chất lượng nguyên liệu </h3>
+      <p>Chất lượng nguyên liệu luôn luôn đứng đầu trong các lựa chọn để có một món ăn ngon miệng, sức khỏe</p>
+      <a href="chatluongnguyenlieu.php" class="detail-link">Chi Tiết</a>
+    </div>
+  </div>
+</section>
+ <div style="height: 1px; background-color: #FF0000; margin-top: -30px;  margin-bottom: 20px;"></div>
+<div id="menu-container"></div>
+
+<!-- trangthaiquan -->
+<div id="closedForm" class="closed-overlay" style="display:none;">
+  <div class="closed-box">
+    <div class="closed-icon">🔒</div>
+    <h1>Quán Đã Đóng Cửa</h1>
+    <p>Chúng tôi rất tiếc vì không thể phục vụ quý khách vào lúc này!</p>
+    <p>Cơm Nhà sẽ trở lại với những món ăn tuyệt vời.</p>
+
+    <div class="closed-hours">
+      <p>🕒 <strong>Giờ Mở Cửa:</strong></p>
+      <p>Thứ 2 - Chủ nhật: 8:00 - 21:00</p>
+      <p>Nghỉ lễ: 8:00 - 15:00</p>
+    </div>
+
+    <div class="closed-info">
+      <p><span class="emoji">📞</span>Liên hệ: 0879 342 732</p>
+      <p><span class="emoji">📍</span>Địa chỉ: 162/1, Đường 3/2, Ninh Kiều, Cần Thơ</p>
+    </div>
+  </div>
+</div>
 
 
    
@@ -366,10 +436,89 @@
       © Bản quyền thuộc về EGANY | Cung cấp bởi Haravan
     </div>
 
-
-
-
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/js/bootstrap.bundle.min.js" integrity="sha384-k6d4wzSIapyDyv1kpU366/PK5hCdSbCRGRCMv+eplOQJWyd1fbcAu9OCUj5zNLiq" crossorigin="anonymous"></script>
+
+<script>
+fetch("get_menu.php")
+  .then((res) => res.json())
+  .then((data) => {
+    const container = document.getElementById("menu-container");
+    container.innerHTML = ""; // Xóa cũ nếu có
+
+    for (const danhmucId in data) {
+      const danhMuc = data[danhmucId];
+      const tenDanhMuc = danhMuc.tendanhmuc || `Danh mục ${danhmucId}`;
+      const group = danhMuc.monan;
+
+      // Tạo khối danh mục
+      const section = document.createElement("section");
+      section.className = "menu-section";
+      section.innerHTML = `<h2>${tenDanhMuc}</h2>`;
+
+      const monList = document.createElement("div");
+      monList.className = "menu-list"; // dùng grid ở đây
+
+      group.forEach((mon) => {
+        const rating = parseFloat(mon.sao) || 4.5;
+        const fullStars = Math.floor(rating);
+        const halfStar = rating % 1 >= 0.5;
+        let starHtml = "";
+
+        for (let i = 0; i < fullStars; i++) starHtml += "⭐";
+        if (halfStar) starHtml += "✩";
+
+        const isHot = mon.hot === "1" || mon.tenmon.toLowerCase().includes("đặc biệt");
+
+        // Tạo thẻ <a> bọc toàn bộ item
+        const link = document.createElement("a");
+        link.href = `chitietsanpham.php?id=${mon.id}`;
+        link.style.textDecoration = "none";
+        link.style.color = "inherit";
+
+        // Tạo div item bên trong <a>
+        const item = document.createElement("div");
+        item.className = "mon-item";
+        item.innerHTML = `
+          ${isHot ? `<div class="hot-label">🔥 HOT</div>` : ""}
+          <img src="../img/${mon.hinhanh}" alt="${mon.tenmon}">
+          <h3>${mon.tenmon}</h3>
+          <div class="price">Giá: ${Number(mon.gia).toLocaleString("vi-VN")}đ</div>
+          <div class="note">${mon.ghichu || ""}</div>
+          <div class="rating">${starHtml} <span style="color:#aaa">(${rating}/5)</span></div>
+          <button class="order-btn">ĐẶT NGAY</button>
+        `;
+
+        // Thêm div vào trong <a>
+        link.appendChild(item);
+
+        // Thêm <a> vào danh sách món
+        monList.appendChild(link);
+      });
+
+      section.appendChild(monList);
+      container.appendChild(section);
+    }
+  })
+  .catch((error) => {
+    console.error("Lỗi khi tải menu:", error);
+  });
+</script>
+
+<!-- trangthaiquan -->
+<script>
+  fetch('get-trangthai.php')
+    .then(res => res.json())
+    .then(data => {
+      console.log("Trạng thái nhận được:", data.trangthai); // DEBUG
+      if (data.trangthai === 'dong') {
+        document.getElementById('closedForm').style.display = 'flex';
+      }
+    })
+    .catch(err => console.error("Lỗi khi gọi get-trangthai.php:", err));
+</script>
+
+
+
 
 </body>
 

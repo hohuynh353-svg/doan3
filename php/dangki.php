@@ -65,16 +65,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
 
 
-
-
-
-
-
-
-
-
-
-
 <!DOCTYPE html>
 <html lang="vi">
 <head>
@@ -83,113 +73,152 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <title>Form Đăng Ký</title>
     <style>
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
-            background-color: #e9ecef;
-            margin: 0;
-        }
-        .form-container {
-            background-color: #fff;
-            padding: 30px;
-            border-radius: 10px;
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
-            width: 100%;
-            max-width: 400px;
-        }
-        .form-container h2 {
-            text-align: center;
-            color: #333;
-            margin-bottom: 20px;
-        }
-        .form-group {
-            margin-bottom: 20px;
-        }
-        .form-group label {
-            display: block;
-            font-weight: bold;
-            color: #555;
-            margin-bottom: 8px;
-        }
-        .form-group input {
-            width: 100%;
-            padding: 10px;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-            font-size: 16px;
-            box-sizing: border-box;
-            transition: border-color 0.3s;
-        }
-        .form-group input:focus {
-            border-color: #007bff;
-            outline: none;
-        }
-        .form-group input:invalid:focus:not(:placeholder-shown) {
-            border-color: #dc3545;
-        }
-        .form-group button {
-            width: 100%;
-            padding: 12px;
-            background-color: #007bff;
-            color: #fff;
-            border: none;
-            border-radius: 5px;
-            font-size: 16px;
-            cursor: pointer;
-            transition: background-color 0.3s;
-        }
-        .form-group button:hover {
-            background-color: #0056b3;
-        }
-        .error-message {
-            color: #dc3545;
-            font-size: 14px;
-            margin-top: 5px;
-            display: none;
-        }
-        @media (max-width: 480px) {
-            .form-container {
-                padding: 20px;
-                margin: 10px;
-            }
-        }
+      background: radial-gradient(circle, #efe8e8ff, #f0e8e8ff);
+      font-family: 'Segoe UI', sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+    }
+
+    .form-container {
+      background-color: #111;
+      color: white;
+      padding: 40px 30px;
+      border-radius: 16px;
+      box-shadow: 0 0 20px rgba(255, 193, 7, 0.2);
+      width: 420px;
+      position: relative;
+    }
+
+    .form-container h2 {
+      text-align: center;
+      color: #ffc107;
+      margin-bottom: 24px;
+    }
+
+    .form-group {
+      margin-bottom: 16px;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 6px;
+      font-weight: bold;
+      color: #ffc107;
+    }
+
+    input[type="text"],
+    input[type="email"],
+    input[type="password"] {
+      width: 100%;
+      padding: 12px;
+      border-radius: 8px;
+      border: 1px solid #444;
+      background-color: #222;
+      color: white;
+      outline: none;
+      transition: border-color 0.3s ease;
+    }
+
+    input:focus {
+      border-color: #ffc107;
+      box-shadow: 0 0 0 2px rgba(255, 193, 7, 0.3);
+    }
+
+    button {
+      width: 100%;
+      padding: 12px;
+      font-size: 16px;
+      font-weight: bold;
+      background: linear-gradient(to right, #ffc107, #ff9800);
+      color: black;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      box-shadow: 0 4px 8px rgba(255, 193, 7, 0.2);
+      transition: all 0.3s ease;
+    }
+
+    button:hover {
+      background: linear-gradient(to right, #ffd700, #ff6f00);
+      transform: translateY(-2px);
+      box-shadow: 0 6px 12px rgba(255, 193, 7, 0.4);
+    }
+
+    .register-link {
+      text-align: center;
+      margin-top: 12px;
+      font-size: 14px;
+    }
+
+    .register-link a {
+      color: #ffc107;
+      text-decoration: none;
+      font-weight: bold;
+    }
+
+    .register-link a:hover {
+      text-decoration: underline;
+    }
+
+    .close-btn {
+  position: absolute;
+  top: 10px;
+  right: 15px;
+  font-size: 24px;
+  color: #ffcc00;
+  cursor: pointer;
+  transition: color 0.2s ease;
+  z-index: 10;
+}
+
+.close-btn:hover {
+  color: #ec1515;
+}
     </style>
 </head>
 <body>
     <div class="form-container">
-        <h2>Đăng Ký Tài Khoản</h2>
-        <form action="dangki.php" method="POST" onsubmit="return validateForm()">
-    <div class="form-group">
+    <div class="close-btn" onclick="window.location.href='index.php'">&times;</div>
+    <h2>Đăng Ký Tài Khoản</h2>
+
+    <form action="dangki.php" method="POST" onsubmit="return validateForm()">
+      <div class="form-group">
         <label for="hoten">Họ và Tên:</label>
         <input type="text" id="hoten" name="hoten" required placeholder="Nhập họ và tên">
-    </div>
-    <div class="form-group">
+      </div>
+
+      <div class="form-group">
         <label for="email">Email:</label>
         <input type="email" id="email" name="email" required placeholder="Nhập email">
-    </div>
-    <div class="form-group">
+      </div>
+
+      <div class="form-group">
         <label for="sdt">Số điện thoại:</label>
         <input type="text" id="sdt" name="sdt" required pattern="\d{10,11}" placeholder="Nhập số điện thoại">
-    </div>
-    <div class="form-group">
+      </div>
+
+      <div class="form-group">
         <label for="matkhau">Mật Khẩu:</label>
         <input type="password" id="matkhau" name="matkhau" required minlength="6" placeholder="Nhập mật khẩu">
-    </div>
-    <div class="form-group">
+      </div>
+
+      <div class="form-group">
         <label for="confirm_matkhau">Xác Nhận Mật Khẩu:</label>
         <input type="password" id="confirm_matkhau" name="confirm_matkhau" required placeholder="Xác nhận mật khẩu">
-    </div>
-    <div class="form-group">
-        <button type="submit">Đăng Ký</button>
-    </div>
-     <div class="register-link">
-                Nếu bạn chưa có tài khoản, hãy <a href="dangnhap.php">đăng nhập</a>
-            </div>
-</form>
+      </div>
 
-    </div>
+      <div class="form-group">
+        <button type="submit">Đăng Ký</button>
+      </div>
+
+      <div class="register-link">
+        Đã có tài khoản? <a href="dangnhap.php">Đăng nhập</a>
+      </div>
+    </form>
+  </div>
     <script src="dangki.js"></script>
 </body>
 </html>

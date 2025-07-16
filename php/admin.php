@@ -4,7 +4,27 @@ if (!isset($_SESSION['role']) || $_SESSION['role'] !== 'admin') {
     header("Location: admin.php");
     exit;
 }
+require_once 'connect.php';
+
+// Xử lý cập nhật trạng thái nếu có gửi form
+if (isset($_POST['trangthai'])) {
+    $trangthai = $_POST['trangthai'];
+    $conn->query("UPDATE hethong SET trangthai = '$trangthai' LIMIT 1");
+}
+
+// Lấy trạng thái hiện tại
+$result = $conn->query("SELECT trangthai FROM hethong LIMIT 1");
+$row = $result->fetch_assoc();
+$trangthai = $row['trangthai'];
 ?>
+
+<h2>🛠 Quản lý trạng thái quán</h2>
+<form method="post">
+  <p>Trạng thái hiện tại: <strong><?= $trangthai === 'mo' ? '🟢 Đang mở' : '🔴 Đang đóng' ?></strong></p>
+  <button name="trangthai" value="mo">🟢 MỞ CỬA</button>
+  <button name="trangthai" value="dong">🔴 ĐÓNG CỬA</button>
+</form>
+
 
 <!DOCTYPE html>
 <html lang="vi">
@@ -17,85 +37,39 @@ if (!isset($_SESSION['role']) || $_SESSION['role'] !== 'admin') {
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
     <link rel="stylesheet" href="../css/admin.css">
     <link rel="stylesheet" href="../css/form_themnv.css">
-    <link rel="stylesheet" href="../css/form_themmon.css">
-
+    <link rel="stylesheet" href="../css/form_themmenu.css">
+    <link rel="stylesheet" href="../css/form_themKH.css">
+    <link rel="stylesheet" href="../css/form_taotknv.css">
+    <link rel="stylesheet" href="../css/danhsachdonhang.css">
+  
 <style>
-
-    .hidden {
-  display: none !important;
-}
-
-    .search-box {
+.modal {
   display: flex;
   align-items: center;
-  border: 2px solid #ccc;
-  border-radius: 25px;
-  overflow: hidden;
-  width: 250px;
-  background-color: white;
+  justify-content: center;
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 9999;
 }
-
-.search-box input[type="text"] {
-  border: none;
-  outline: none;
-  padding: 10px 15px;
-  flex: 1;
-  font-size: 14px;
-  border-radius: 25px 0 0 25px;
+.modal.hidden {
+  display: none;
 }
-
-.search-box button {
-  border: none;
-  background-color: #28a745; /* màu nút */
-  color: white;
-  padding: 10px 15px;
+.modal-content {
+  background: white;
+  padding: 20px;
+  border-radius: 12px;
+  max-width: 700px;
+  width: 90%;
+  box-shadow: 0 0 10px rgba(0,0,0,0.3);
+  max-height: 90vh;
+  overflow-y: auto;
+}
+.close {
+  float: right;
+  font-size: 24px;
   cursor: pointer;
-  border-radius: 0 25px 25px 0;
-  transition: background-color 0.3s ease;
 }
-
-.search-box button:hover {
-  background-color:rgb(19, 111, 24);
-}
-
-.search-box i {
-  font-size: 16px;
-}
-
-#searchTour::placeholder {
-  font-style: italic;
-}
-
-.menu-item a,
-.menu-item a:visited {
-  color: white !important;
-  text-decoration: none;
-}
-
-.menu-item {
-  list-style: none;
-}
-
-.modal.show {
-  display: flex; /* Khi có class show sẽ hiện */
-}
-
-.btn {
-    padding: 10px 15px;
-    border: none;
-    border-radius: 4px;
-    font-size: 14px;
-    cursor: pointer;
-}
-.btn-success {
-    background-color: #28a745;
-    color: white;
-}
-.btn-danger {
-    background-color: #dc3545;
-    color: white;
-}
-
 </style>
 
 </head>
@@ -144,10 +118,11 @@ if (!isset($_SESSION['role']) || $_SESSION['role'] !== 'admin') {
             <h1 id="page-title">Trang Quản Trị</h1>
             <a href="dangxuat.php" class="btn btn-danger">Đăng Xuất</a>
         </div>
+    <div class="content-area">
 
-        <div class="content-area">
+
             <!-- Orders Section -->
-            <div id="orders-section" class="section">
+<div id="orders-section" class="section">
   <div style="display: flex; justify-content: space-between; align-items: center;">
     <h2>Danh Sách Đơn Hàng</h2>
     <div class="search-box">
@@ -156,41 +131,27 @@ if (!isset($_SESSION['role']) || $_SESSION['role'] !== 'admin') {
     </div>
   </div>
 
-  <table>
+  <table border="1">
     <thead>
       <tr>
         <th>Mã Đơn</th>
-        <th>Khách Hàng</th>
-        <th>Tên Món</th>
-        <th>Số Lượng Món</th>
-        <th>Ngày Đặt</th>
+        <th>Khách Hàng (ID)</th>
+        <th>Ngày Đặt</th>
         <th>Tổng Tiền</th>
         <th>Trạng Thái</th>
         <th>Thao Tác</th>
       </tr>
     </thead>
-    <tbody>
-      <tr>
-        <td>#001</td>
-        <td>Nguyễn Văn A</td>
-        <td>150,000 VNĐ</td>
-        <td>2</td>
-        <td>2024-06-10</td>
-        <td>300,000 VNĐ</td>
-        <td>Đang xử lý</td>
-        <td>
-          <button class="btn btn-success">Sửa</button>
-          <button class="btn btn-danger">Xóa</button>
-        </td>
-      </tr>
-      <!-- Thêm các dòng khác nếu cần -->
+    <tbody id="orders-tbody">
+      <!-- Các dòng đơn hàng sẽ được JavaScript thêm vào đây -->
     </tbody>
   </table>
 </div>
 
 
+
             <!-- Customers Section -->
-            <div id="customers-section" class="section hidden">
+<div id="customers-section" class="section hidden">
                 <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
                     <h2>Danh Sách Khách Hàng</h2>
                     <div style="display: flex; gap: 10px; align-items: center;">
@@ -214,7 +175,7 @@ if (!isset($_SESSION['role']) || $_SESSION['role'] !== 'admin') {
                 </div>
 
                 <div class="table-container">
-                    <table id="customers-table">
+                    <table id="customers-table" border="1">
                         <thead>
                             <tr>
                                 <th>ID</th>
@@ -231,45 +192,43 @@ if (!isset($_SESSION['role']) || $_SESSION['role'] !== 'admin') {
                         </tbody>
                     </table>
                 </div>
-            </div>
+</div>
 
             <!-- Menu Section -->
-            <div id="menu-section" class="section hidden">
-                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
-                    <h2>Danh Sách Món Ăn</h2>
-                    <button class="btn btn-primary" onclick="openMenuModal()">
-                         <i class="fas fa-plus"></i> Thêm món mới
-                    </button>
+<div id="menu-section" class="section hidden">
+   <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+  <h2>Danh Sách Món Ăn</h2>
+  <button class="btn btn-primary" onclick="openAddMenuModal()">
+    <i class="fas fa-plus"></i> Thêm món ăn mới
+  </button>
+ </div>
+    <div id="menu-loading" class="loading hidden">
+        <i class="fas fa-spinner fa-spin"></i> Đang tải...
+    </div>
 
-                </div>
+    <div class="table-container">
+        <table id="menu-table" border="1">
+            <thead>
+                <tr>
+                    <th>STT</th>
+                    <th>Tên Món</th>
+                    <th>Giá</th>
+                    <th>Hình Ảnh</th>
+                    <th>Danh Mục</th>
+                    <th>Ghi Chú</th>
+                    <th>Trạng thái</th>
+                    <th>Ngày Tạo</th>
+                    <th>Thao Tác</th>
+                </tr>
+              </thead>
+            <tbody id="menu-tbody"></tbody>
+        </table>
+    </div>
+</div>
 
-                <div id="menu-loading" class="loading hidden">
-                    <i class="fas fa-spinner fa-spin"></i> Đang tải...
-                </div>
-
-                <div class="table-container">
-                    <table id="menu-table">
-                        <thead>
-                            <tr>
-                                <th>ID</th>
-                                <th>Tên món</th>
-                                <th>Số lượng</th>
-                                <th>Giá</th>
-                                <th>Hình ảnh</th>
-                                <th>Ngày Tạo</th>
-                                <th>Ghi chú</th>
-                                <th>Thao Tác</th>
-                            </tr>
-                        </thead>
-                        <tbody id="table-body-menu">
-                            <!-- Dữ liệu nhân viên sẽ được tải qua JS -->
-                        </tbody>
-                    </table>
-                </div>
-            </div>
 
             <!-- Staff Section -->
-            <div id="staff-section" class="section hidden">
+<div id="staff-section" class="section hidden">
                 <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
                     <h2>Danh Sách Tài Khoản</h2>
                     <button class="btn btn-primary" onclick="openAddStaffModal()">
@@ -282,7 +241,7 @@ if (!isset($_SESSION['role']) || $_SESSION['role'] !== 'admin') {
                 </div>
 
                 <div class="table-container">
-                    <table id="staff-table">
+                    <table id="staff-table" border="1">
                         <thead>
                             <tr>
                                 <th>ID</th>
@@ -298,10 +257,10 @@ if (!isset($_SESSION['role']) || $_SESSION['role'] !== 'admin') {
                         </tbody>
                     </table>
                 </div>
-            </div>
+</div>
 
             <!-- Employees Section -->
-            <div id="employees-section" class="section hidden">
+<div id="employees-section" class="section hidden">
                 <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
                     <h2>Danh Sách Nhân Viên</h2>
                     <button class="btn btn-primary" onclick="openEmployeesModal()">
@@ -315,7 +274,7 @@ if (!isset($_SESSION['role']) || $_SESSION['role'] !== 'admin') {
                 </div>
 
                 <div class="table-container">
-                    <table id="employees-table">
+                    <table id="employees-table" border="1">
                         <thead>
                             <tr>
                                 <th>ID</th>
@@ -334,10 +293,10 @@ if (!isset($_SESSION['role']) || $_SESSION['role'] !== 'admin') {
                         </tbody>
                     </table>
                 </div>
-            </div>
+</div>
 
-            <!-- Review Section -->
-            <div id="review-section" class="section hidden">
+            <!-- DanhGia Section -->
+<div id="review-section" class="section hidden">
                 <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
                     <h2>Danh Sách Đánh Giá</h2>
                     <div class="search-box">
@@ -374,10 +333,10 @@ if (!isset($_SESSION['role']) || $_SESSION['role'] !== 'admin') {
                         </tbody>
                     </table>
                 </div>
-            </div>
+</div>
 
             <!-- LienHe Section -->
-            <div id="lienhe-section" class="section hidden">
+<div id="lienhe-section" class="section hidden">
                 <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
                     <h2>Danh Sách Liên Hệ</h2>
                     <div class="search-box">
@@ -425,7 +384,7 @@ if (!isset($_SESSION['role']) || $_SESSION['role'] !== 'admin') {
 <!-- Modals -->
 
 <!-- Customer Modal -->
-<div id="customerModal" class="modal">
+<div id="customerModal" class="modal hidden">
     <div class="modal-content">
         <span class="close" onclick="closeCustomerModal()">&times;</span>
         <h3 id="modal-title">Thêm Khách Hàng Mới</h3>
@@ -461,7 +420,7 @@ if (!isset($_SESSION['role']) || $_SESSION['role'] !== 'admin') {
 </div>
 
 <!-- Staff Modal -->
-<div id="staffModal" class="modal">
+<div id="staffModal" class="modal hidden"> ">
     <div class="modal-content">
         <span class="close" onclick="closeStaffModal()">&times;</span>
         <h3 id="staff-modal-title"> Nhân Viên </h3>
@@ -497,9 +456,8 @@ if (!isset($_SESSION['role']) || $_SESSION['role'] !== 'admin') {
 </div>
 
 <!-- Employees Modal -->
-<div id="employeesModal" class="modal">
+<div id="employeesModal" class="modal hidden">
   <div class="modal-content">
-    <span class="close" onclick="closeEmployeesModal()">&times;</span>
     <h3 id="employees-modal-title">Thêm Nhân Viên Mới</h3>
     <form id="employeesForm" >
       <input type="hidden" id="employees-id" />
@@ -552,65 +510,66 @@ if (!isset($_SESSION['role']) || $_SESSION['role'] !== 'admin') {
   </div>
 </div>
 
-<!-- Menu Modal -->
-<div id="menu" class="modal">
+<!-- Modal Menu -->
+<div id="menuModal" class="modal" style="display: none;">
+ 
+    
+    <form id="menuForm" enctype="multipart/form-data">
+     <input type="hidden" id="menu-id" name="id"> <!-- để cập nhật -->
+  <h2 id="modal-title-menu">Thêm Món Ăn</h2>
+
+
+      <label>Tên món:</label>
+      <input type="text" id="menu-tenmon" name="tenmon" required>
+
+
+      <label>Giá:</label>
+      <input type="number" id="menu-gia" name="gia" required>
+
+      <div id="image-group">
+  <label>Hình ảnh:</label>
+  <input type="file" name="hinhanh" accept="image/*" />
+  <img id="menu-preview-img" src="" width="100" style="display: none; margin-top: 8px;" />
+</div>
+
+    
+      <label for="menu-danhmucmon">Danh Mục Món</label>
+  <select id="menu-danhmucmon" name="danhmucmon" required>
+  <!-- Sẽ được load bằng JavaScript -->
+   </select>
+
+
+      <label>Ghi chú:</label>
+      <textarea id="menu-ghichu" name="ghichu" rows="3"></textarea>
+      
+      <label>Trạng thái:</label>
+<select id="menu-trangthai" name="trangthai">
+  <option value="Còn hàng">Còn hàng</option>
+  <option value="Hết hàng">Hết hàng</option>
+</select>
+
+
+      <button type="submit">Lưu</button>
+    </form>
+  
+</div>
+
+<!-- Modal hiển thị chi tiết đơn hàng -->
+<div id="orderDetailModal" class="modal hidden">
   <div class="modal-content">
-    <span class="close" onclick="closeMenuModal()">&times;</span>
-    <h3 id="menu-modal-title">Thêm Món Mới</h3>
-      <form>
-        <div class="form-group">
-          <div class="form-field">
-            <label class="required">Tên Món</label>
-            <input type="text" placeholder="Nhập tên món ăn" required/>
-          </div>
-
-          <div class="form-field">
-            <label class="required">Số lượng</label>
-            <input type="text" placeholder="Nhập số lượng"required/>
-          </div>
-
-          <div class="form-field">
-            <label class="required">Giá</label>
-            <input type="text" placeholder="Nhập giá"required/>
-          </div>
-
-          <div class="form-field">
-            <label class="required">Hình ảnh</label>
-            <input type="file" accept="image/*"required/>
-          </div>
-
-          <div class="form-field">
-            <label class="required">Danh mục</label>
-            <select>
-              <option>Cơm</option>
-              <option>Mì-Hủ tiếu-Bún</option>
-              <option>Món Kho</option>
-              <option>Món Canh</option>
-              <option>Món Chay</option>
-            </select>
-          </div>
-
-          <div class="form-field" style="flex: 1 1 100%">
-            <label class="required">Ghi chú</label>
-            <textarea
-              placeholder="Nhập ghi chú..."
-              rows="4"
-              style="resize: vertical"
-            ></textarea>
-          </div>
-
-          <div class="form-actions">
-            <button type="button" class="btn btn-cancel" onclick="closeMenuModal()">Huỷ</button>
-            <button type="submit" class="btn btn-submit">Thêm</button>
-          </div>
-        </div>
-      </form>
+    <span class="close" onclick="closeOrderModal()">&times;</span>
+    <div id="order-detail-content"></div>
   </div>
 </div>
 
 
 
-    <script>
+
+
+
+
+
+<script>
         // Navigation handling
         document.querySelectorAll('.menu-item').forEach(item => {
             item.addEventListener('click', function() {
@@ -647,91 +606,12 @@ if (!isset($_SESSION['role']) || $_SESSION['role'] !== 'admin') {
                 }
             });
         });
-        //////////
-        function openAddStaffModal() {
-    document.getElementById('staffForm').reset();
-    document.getElementById('staff-id').value = '';
-    document.getElementById('staff-modal-title').innerText = 'Tạo tài khoản Nhân Viên';
-    document.getElementById('staffModal').style.display = 'block';
-       }
-
-
-
-
-function closeStaffModal() {
-    document.getElementById('staffModal').style.display = 'none';
-}
-
-window.addEventListener('click', function(event) {
-    const modal = document.getElementById('staffModal');
-    if (event.target === modal) {
-        modal.style.display = 'none';
-    }
-});
+       
 ////
-function openEmployeesModal() {
-  console.log("Đã gọi openEmployeesModal");
-  const modal = document.getElementById('employeesModal');
-  modal.classList.remove('hidden');}
 
-/////////
       
-    </script>
-    
-       <script src="../js/taikhoannv.js"></script>
-       <script src="../js/danhsachKH.js"></script>
-       <script src="../js/danhsachnv.js"></script>
-
-    
-
-  <script>
-  // Đóng modal
-  function closeEmployeesModal() {
-    document.getElementById('employeesModal').style.display = 'none';
-  }
-
-  // Load lại danh sách nhân viên
-  function loadNhanVien() {
-    fetch("load_nv.php")
-      .then(response => response.text())
-      .then(data => {
-        document.getElementById("table-body-nhanvien").innerHTML = data;
-      });
-  }
-
-  // Xử lý thêm nhân viên bằng AJAX
-  document.getElementById("employeesForm").addEventListener("submit", function(e) {
-    e.preventDefault(); // Ngăn submit truyền thống
-
-    const formData = new FormData(this);
-
-    fetch("quanlynv.php", {
-      method: "POST",
-      body: formData
-    })
-    .then(response => response.text())
-    .then(data => {
-      if (data.trim() === "success") {
-        alert("Đã thêm nhân viên!");
-
-        // ✅ Đóng modal
-        closeEmployeesModal();
-
-        // ✅ Reset form
-        this.reset();
-
-        // ✅ Cập nhật bảng ngay lập tức
-        loadNhanVien();
-      } else {
-        alert("Lỗi khi thêm nhân viên: " + data);
-      }
-    });
-  });
-
-  // Tự động load bảng khi vào trang
-  document.addEventListener("DOMContentLoaded", loadNhanVien);
 </script>
-
+    
 <!-- Mở modal thêm món-->
 <script>
   function openMenuModal() {
@@ -853,6 +733,17 @@ function checkIfLienHeCleared() {
     });
   }
 }
+
+
+</script>
+
+
+    <script src="../js/taikhoannv.js"></script>
+    <script src="../js/danhsachKH.js"></script>
+    <script src="../js/danhsachmonan.js"></script>
+    <script src="../js/quanlinhanvien.js"></script>
+    <script src="../js/danhsachdonhang.js"></script>
+
 </script>
 
 

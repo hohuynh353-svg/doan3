@@ -1,0 +1,24 @@
+/* Nút Quay lại (màu nhạt) */
+.back-btn {
+  background-color: white;
+  color: #ff4500;
+  border: 1px solid #ff4500;
+  padding: 6px 20px; /* Chiều cao bằng nút đặt hàng */
+  font-size: 16px;
+  border-radius: 6px; /* Cho đồng bộ */
+  cursor: pointer;
+  font-weight: bold;
+  text-decoration: none; /* Bỏ gạch chân link */
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition: background-color 0.2s, color 0.2s;
+  width: 100px;
+  margin-bottom: 20px; /* Khoảng cách dưới */
+  margin-top: 8px; /* Khoảng cách trên */
+}
+
+.back-btn:hover {
+  background-color: #fff5f0;
+  color: #e03d00;
+}

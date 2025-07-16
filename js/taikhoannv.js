@@ -6,12 +6,12 @@ function openAddStaffModal() {
   document.getElementById("staff-id").value = ""; // xóa id khi thêm mới
   document.getElementById("staff-modal-title").innerText =
     "Tạo tài khoản Nhân Viên";
-  document.getElementById("staffModal").style.display = "block";
+  document.getElementById("staffModal").classList.remove("hidden");
 }
 
 // Hàm đóng modal
 function closeStaffModal() {
-  document.getElementById("staffModal").style.display = "none";
+  document.getElementById("staffModal").classList.add("hidden");
 }
 
 // Đóng modal khi click ra ngoài nội dung modal
@@ -82,7 +82,6 @@ function loadStaffData() {
 
 // Hàm mở modal sửa, điền dữ liệu nhân viên vào form
 async function editStaff(id) {
-  // Lấy danh sách nhân viên, tìm nhân viên theo id
   try {
     const res = await fetch("taikhoannv.php");
     const data = await res.json();
@@ -97,11 +96,11 @@ async function editStaff(id) {
     document.getElementById("hoten").value = nv.hoten;
     document.getElementById("email").value = nv.email;
     document.getElementById("sdt").value = nv.sdt;
-    document.getElementById("matkhau").value = ""; // Để trống, nếu muốn đổi thì nhập
+    document.getElementById("matkhau").value = ""; // Để trống khi sửa
 
     document.getElementById("staff-modal-title").innerText =
       "Sửa Thông Tin Nhân Viên";
-    document.getElementById("staffModal").style.display = "block";
+    document.getElementById("staffModal").classList.remove("hidden");
   } catch (error) {
     alert("Lỗi khi lấy dữ liệu nhân viên: " + error.message);
   }
