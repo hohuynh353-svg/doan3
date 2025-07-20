@@ -33,6 +33,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             if ($user['role'] === 'admin') {
                 echo "<script>alert('Đăng nhập thành công (Admin)'); window.location.href = 'admin.php';</script>";
             } elseif ($user['role'] === 'nhanvien') {
+                 $_SESSION['nhanvien_taikhoan'] = $user['hoten']; // <-- thêm dòng này
                 echo "<script>alert('Đăng nhập thành công (Nhân viên)'); window.location.href = 'nhanvien.php';</script>";
             } else {
                 echo "<script>alert('Đăng nhập thành công (Khách hàng)'); window.location.href = 'index.php';</script>";

@@ -4,10 +4,10 @@ const STATUS_ORDER = [
   "Đã xác nhận", // 1
   "Đang giao hàng", // 2
   "Giao hàng thành công", // 3
-  "Đã hủy", // 4 (ngoại lệ, luôn chọn được)
+  "Đã hủy", // 4 (ngoại lệ)
 ];
 
-// Hàm chuyển trạng thái thành class CSS để đổi màu
+// Hàm chuyển trạng thái thành class CSS
 function getStatusClass(status) {
   switch (status) {
     case "Đang chờ xác nhận":
@@ -36,7 +36,7 @@ fetch("get_orders.php")
       const statusClass = getStatusClass(order.trangthai);
       const currentStatusIndex = STATUS_ORDER.indexOf(order.trangthai);
 
-      // Tạo danh sách option trong select với trạng thái bị khóa nếu lùi lại
+      // Tạo các option trạng thái
       let statusOptions = "";
       STATUS_ORDER.forEach((status, i) => {
         const selected = status === order.trangthai ? "selected" : "";
@@ -45,10 +45,11 @@ fetch("get_orders.php")
         statusOptions += `<option value="${status}" ${selected} ${disabled}>${status}</option>`;
       });
 
+      // Tạo hàng mới trong bảng
       const row = document.createElement("tr");
       row.innerHTML = `
         <td>#${order.id}</td>
-        <td>${order.user_id}</td>
+        <td>${order.hoten}</td> <!-- Đổi từ user_id sang hoten -->
         <td>${order.thoigian}</td>
         <td>${Number(order.tongtien).toLocaleString()} VNĐ</td>
         <td>
@@ -62,20 +63,17 @@ fetch("get_orders.php")
           })">Xem</button>
         </td>
       `;
-
       tbody.appendChild(row);
     });
 
-    // Bắt sự kiện thay đổi trạng thái
+    // Sự kiện đổi trạng thái
     document.querySelectorAll(".order-status").forEach((select) => {
       select.addEventListener("change", function () {
         const orderId = this.getAttribute("data-id");
         const newStatus = this.value;
 
-        // Đổi class màu sắc
         this.className = `order-status ${getStatusClass(newStatus)}`;
 
-        // Gửi yêu cầu cập nhật trạng thái
         fetch("update_order_status.php", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
