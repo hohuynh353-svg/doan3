@@ -1,6 +1,7 @@
 <?php
 session_start();
 
+
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['sonha'])) {
     $_SESSION['diachi'] = [
         'sonha' => $_POST['sonha'],
@@ -45,14 +46,30 @@ foreach ($donhang as $mon) {
     $tamtinh += $mon['gia'] * $mon['soluong'];
 }
 $tongcong = $tamtinh;
+
+$sdt = $user['sdt'] ?? '';
+
+$canhbao = '';
+$check_sql = "SELECT trangthai FROM so_bi_chan WHERE sdt = '$sdt'";
+$result = mysqli_query($conn, $check_sql);
+$row = mysqli_fetch_assoc($result);
+
+if ($row && $row['trangthai'] === 'chan') {
+    $canhbao = '❌ Số điện thoại của bạn đã bị chặn do quá nhiều đơn hàng giao không thành công. Bạn không thể tiếp tục đặt hàng.';
+}
+
+
 ?>
+
+
+
 
 <!DOCTYPE html>
 <html lang="vi">
 <head>
     <meta charset="UTF-8">
     <title>Xác nhận đơn hàng</title>
-    <style>
+<style>
         body {
             font-family: Arial, sans-serif;
             background-color: #f3f4f6;
@@ -136,9 +153,32 @@ $tongcong = $tamtinh;
         .disabled {
             color: #ccc;
         }
-    </style>
+</style>
+
+    <script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const radios = document.querySelectorAll('input[name="uudai"]');
+        const totalElement = document.getElementById('tongcong');
+        const originalTotal = <?= $tongcong ?>;
+
+        radios.forEach(radio => {
+            radio.addEventListener('change', function () {
+                const discount = parseInt(this.value); // phần trăm giảm
+                const discounted = Math.round(originalTotal * (1 - discount / 100));
+                totalElement.innerText = `Tổng cộng: ${discounted.toLocaleString('vi-VN')}đ`;
+            });
+        });
+    });
+</script>
+
 </head>
 <body>
+    <?php if ($canhbao): ?>
+    <div style="background: #ffe0e0; color: #a10000; padding: 15px; border: 1px solid #ff0000; margin-bottom: 20px; border-radius: 8px;">
+        <?= $canhbao ?>
+    </div>
+<?php endif; ?>
+
     <div class="container">
         <!-- Thông tin đơn hàng -->
         <div class="box">
@@ -149,7 +189,8 @@ $tongcong = $tamtinh;
                     <?= number_format($mon['gia']) ?>đ
                 </div>
             <?php endforeach; ?>
-            <div class="total">Tổng cộng: <?= number_format($tongcong) ?>đ</div>
+          <div class="total" id="tongcong">Tổng cộng: <?= number_format($tongcong) ?>đ</div>
+
         </div>
 
         <!-- Thông tin khách hàng + điểm + phương thức -->
@@ -192,7 +233,8 @@ $tongcong = $tamtinh;
                     <label><input type="radio" name="thanhtoan" value="bank"> Chuyển khoản ngân hàng</label>
                 </div>
 
-                <button class="submit-btn" type="submit">🔒 XÁC NHẬN THANH TOÁN</button>
+             <button class="submit-btn" type="submit" <?= $canhbao ? 'disabled style="background:#ccc;cursor:not-allowed;"' : '' ?>>🔒 XÁC NHẬN THANH TOÁN</button>
+
             </form>
         </div>
     </div>

@@ -154,7 +154,11 @@ form .total {
   <p>🛒 Chưa có món nào trong đơn hàng.</p>
   <a href="index.php" class="btn btn-add">⬅ Quay lại chọn món</a>
 <?php else: ?>
- <form method="post" action="xacnhan.php">
+<?php 
+  $action = isset($_SESSION['user_id']) ? 'xacnhan.php' : 'xacnhankhach.php'; 
+?>
+<form method="post" action="<?= $action ?>">
+
   <?php foreach ($donhang as $index => $mon): 
     $thanhtien = $mon['gia'] * $mon['soluong'];
     $tong += $thanhtien;

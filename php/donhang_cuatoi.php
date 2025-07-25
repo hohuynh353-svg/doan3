@@ -226,6 +226,28 @@ document.addEventListener("DOMContentLoaded", function () {
   });
 });
 </script>
+<script>
+function huyDon(id) {
+  if (!confirm("Bạn chắc chắn muốn hủy đơn hàng này?")) return;
+
+  fetch('huydon.php', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/x-www-form-urlencoded'
+    },
+    body: 'donhang_id=' + encodeURIComponent(id)
+  })
+  .then(response => response.text())
+  .then(data => {
+    alert(data);
+    location.reload();
+  })
+  .catch(error => {
+    console.error('Lỗi khi gửi yêu cầu:', error);
+    alert("Đã có lỗi xảy ra.");
+  });
+}
+</script>
 
 </body>
 

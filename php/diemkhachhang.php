@@ -17,7 +17,8 @@ if (!$donhang_id) {
 }
 
 // Lấy thông tin khách hàng
-$stmt = $conn->prepare("SELECT hoten, email, diemtichluy FROM users WHERE id = ?");
+$stmt = $conn->prepare("SELECT hoten, email, sdt, diemtichluy FROM users WHERE id = ?");
+
 $stmt->bind_param("i", $userId);
 $stmt->execute();
 $user = $stmt->get_result()->fetch_assoc();
@@ -132,6 +133,8 @@ $ct_result = $stmt->get_result();
         <div class="section-title">👤 Thông Tin Khách Hàng</div>
         <div class="info">
             <p><span>Họ tên:</span> <?= htmlspecialchars($user['hoten']) ?></p>
+            <p><span>Số điện thoại:</span> <?= htmlspecialchars($user['sdt']) ?></p>
+
             <p><span>Email:</span> <?= htmlspecialchars($user['email']) ?></p>
 
             <?php

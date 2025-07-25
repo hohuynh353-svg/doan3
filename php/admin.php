@@ -109,6 +109,8 @@ $trangthai = $row['trangthai'];
         <button class="menu-item" onclick="location.href='index.php'">
             <i class="fas fa-sign-out-alt"></i> Trang chủ
         </button>
+       <a href="danh_sach_chan.php" style="color: white; font-weight: bold; text-decoration: none;">📵 Số bị chặn</a>
+
 
     </div>
 
@@ -560,6 +562,11 @@ $trangthai = $row['trangthai'];
     <span class="close" onclick="closeOrderModal()">&times;</span>
     <div id="order-detail-content"></div>
   </div>
+</div>
+
+<div id="orderDetailModal" class="hidden">
+  <div id="order-detail-content"></div>
+  <button onclick="closeOrderModal()">Đóng</button>
 </div>
 
 

@@ -202,19 +202,9 @@ $related_items = $related_result->fetch_all(MYSQLI_ASSOC);
   </div>
 </form>
 
-
-
-
-
-    
-
     </div>
   </div>
 </div>
-
-
-
-
 
   <!-- Món ăn cùng danh mục -->
    <h1 style="margin-top: 50px; text-align: center; font-size: 40px;">
@@ -288,11 +278,6 @@ $related_items = $related_result->fetch_all(MYSQLI_ASSOC);
     </div>
   </div>
 <?php endif; ?>
-
-
-
-
-
 
 
 </body>

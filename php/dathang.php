@@ -1,10 +1,5 @@
 <?php
 session_start();
-$donhang = $_SESSION['donhang'] ?? [];
-$tongcong = 0;
-?>
-<?php
-session_start();
 
 $tenmon = $_POST['tenmon'] ?? '';
 $gia = (int) ($_POST['gia'] ?? 0);
@@ -12,19 +7,34 @@ $soluong = (int) ($_POST['soluong'] ?? 1);
 $ghichu = $_POST['ghichu'] ?? '';
 $hinhanh = $_POST['hinhanh'] ?? '../img/no-image.png';
 
-// Lưu thẳng vào session đơn hàng
-$_SESSION['donhang'][] = [
-  'tenmon' => $tenmon,
-  'gia' => $gia,
-  'soluong' => $soluong,
-  'ghichu' => $ghichu,
-  'hinhanh' => $hinhanh
-];
+if (!isset($_SESSION['donhang'])) {
+    $_SESSION['donhang'] = [];
+}
 
-// Chuyển sang trang đặt hàng chính
+$daCo = false;
+foreach ($_SESSION['donhang'] as &$mon) {
+    if ($mon['tenmon'] === $tenmon && $mon['gia'] == $gia) {
+        $mon['soluong'] += $soluong;
+        $daCo = true;
+        break;
+    }
+}
+unset($mon);
+
+if (!$daCo) {
+    $_SESSION['donhang'][] = [
+        'tenmon' => $tenmon,
+        'gia' => $gia,
+        'soluong' => $soluong,
+        'ghichu' => $ghichu,
+        'hinhanh' => $hinhanh
+    ];
+}
+
 header("Location: donhang.php");
 exit;
 ?>
+
 <!DOCTYPE html>
 <html lang="vi">
 <head>

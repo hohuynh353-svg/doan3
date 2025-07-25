@@ -4,7 +4,8 @@ const STATUS_ORDER = [
   "Đã xác nhận", // 1
   "Đang giao hàng", // 2
   "Giao hàng thành công", // 3
-  "Đã hủy", // 4 (ngoại lệ)
+  "Giao hàng không thành công", // 4 (mới)
+  "Đã hủy", // 5 (ngoại lệ)
 ];
 
 // Hàm chuyển trạng thái thành class CSS
@@ -18,6 +19,8 @@ function getStatusClass(status) {
       return "shipping";
     case "Giao hàng thành công":
       return "success";
+    case "Giao hàng không thành công":
+      return "failed"; // lớp CSS mới bạn nên định nghĩa thêm
     case "Đã hủy":
       return "cancelled";
     default:
@@ -25,6 +28,7 @@ function getStatusClass(status) {
   }
 }
 
+// Gọi API để lấy danh sách đơn hàng
 // Gọi API để lấy danh sách đơn hàng
 fetch("get_orders.php")
   .then((res) => res.json())
@@ -41,15 +45,25 @@ fetch("get_orders.php")
       STATUS_ORDER.forEach((status, i) => {
         const selected = status === order.trangthai ? "selected" : "";
         const disabled =
-          i < currentStatusIndex && status !== "Đã hủy" ? "disabled" : "";
+          i < currentStatusIndex &&
+          status !== "Đã hủy" &&
+          status !== "Giao hàng không thành công"
+            ? "disabled"
+            : "";
         statusOptions += `<option value="${status}" ${selected} ${disabled}>${status}</option>`;
       });
+
+      // Kiểm tra xem có phải khách vãng lai không
+      const laKhachVangLai =
+        order.user_id === null ||
+        order.user_id === "null" ||
+        order.user_id === 0;
 
       // Tạo hàng mới trong bảng
       const row = document.createElement("tr");
       row.innerHTML = `
         <td>#${order.id}</td>
-        <td>${order.hoten}</td> <!-- Đổi từ user_id sang hoten -->
+        <td>${order.hoten}</td>
         <td>${order.thoigian}</td>
         <td>${Number(order.tongtien).toLocaleString()} VNĐ</td>
         <td>
@@ -60,7 +74,7 @@ fetch("get_orders.php")
         <td>
           <button class="btn btn-info" onclick="viewOrder(${
             order.id
-          })">Xem</button>
+          }, ${laKhachVangLai})">Xem</button>
         </td>
       `;
       tbody.appendChild(row);
@@ -92,8 +106,12 @@ fetch("get_orders.php")
   });
 
 // Hiển thị form chi tiết đơn hàng
-function viewOrder(orderId) {
-  fetch("get_order_detail.php?id=" + orderId)
+function viewOrder(orderId, laKhachVangLai = false) {
+  const url = laKhachVangLai
+    ? "get_order_guest.php?id=" + orderId
+    : "get_order_detail.php?id=" + orderId;
+
+  fetch(url)
     .then((res) => res.text())
     .then((html) => {
       document.getElementById("order-detail-content").innerHTML = html;

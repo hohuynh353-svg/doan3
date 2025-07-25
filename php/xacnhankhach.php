@@ -7,100 +7,57 @@ $tong = 0;
 <html lang="vi">
 <head>
   <meta charset="UTF-8">
-  <title>Xác nhận đơn hàng</title>
-<style>
-    body {
+  <title>Xác nhận đặt hàng</title>
+  <style>
+    * {
+      box-sizing: border-box;
       font-family: Arial, sans-serif;
-      background: #f9f9f9;
-      padding: 30px;
     }
+
+    body {
+      margin: 0;
+      padding: 40px;
+      background-color: #f7f7f7;
+    }
+
     .container {
       display: flex;
-      gap: 30px;
       max-width: 1200px;
       margin: auto;
+      gap: 30px;
     }
-    .form-left, .order-right {
-      background: white;
-      padding: 20px;
-      border-radius: 10px;
+
+    .form-left,
+    .order-right {
+      background-color: white;
+      padding: 25px;
+      border-radius: 12px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.05);
       flex: 1;
-      box-shadow: 0 2px 10px rgba(0,0,0,0.05);
     }
-    .form-left h2, .order-right h2 {
-      margin-top: 0;
+
+    h2 {
       color: #007bff;
+      margin-bottom: 20px;
     }
+
     label {
-      font-weight: bold;
       display: block;
-      margin-bottom: 5px;
       margin-top: 10px;
+      font-weight: bold;
     }
-    input, select, textarea {
+
+    input,
+    select {
       width: 100%;
       padding: 10px;
-      margin-bottom: 12px;
+      margin-top: 4px;
       border: 1px solid #ccc;
       border-radius: 6px;
-      box-sizing: border-box;
+      font-size: 15px;
     }
-    .order-item {
-      display: flex;
-      margin-bottom: 15px;
-      border-bottom: 1px solid #eee;
-      padding-bottom: 10px;
-      position: relative;
-    }
-    .order-image-wrapper {
-      position: relative;
-      width: 60px;
-      height: 60px;
-      margin-right: 12px;
-    }
-    .order-image-wrapper img {
-      width: 60px;
-      height: 60px;
-      border-radius: 6px;
-      object-fit: cover;
-    }
-    .quantity-badge {
-      position: absolute;
-      top: -5px;
-      left: -5px;
-      background-color: #f32a5cff;
-      color: white;
-      width: 22px;
-      height: 22px;
-      border-radius: 50%;
-      font-size: 13px;
-      text-align: center;
-      line-height: 22px;
-      font-weight: bold;
-    }
-    .order-content {
-      flex: 1;
-    }
-    .order-title {
-      font-weight: bold;
-      margin: 0;
-    }
-    .order-note {
-      font-size: 13px;
-      color: #777;
-    }
-    .order-price {
-      font-weight: bold;
-      text-align: right;
-      white-space: nowrap;
-    }
-    .total {
-      text-align: right;
-      font-size: 18px;
-      font-weight: bold;
-      margin-top: 20px;
-    }
-    .btn-submit {
+
+    .submit-btn {
       width: 100%;
       padding: 12px;
       background: #007bff;
@@ -111,18 +68,86 @@ $tong = 0;
       margin-top: 20px;
       cursor: pointer;
     }
-</style>
+
+    .order-item {
+      display: flex;
+      align-items: center;
+      margin-bottom: 15px;
+      border-bottom: 1px solid #ddd;
+      padding-bottom: 10px;
+    }
+
+    .order-image-wrapper {
+      position: relative;
+      margin-right: 15px;
+    }
+
+    .order-image-wrapper img {
+      width: 60px;
+      height: 60px;
+      border-radius: 8px;
+      object-fit: cover;
+    }
+
+    .quantity-badge {
+      position: absolute;
+      top: -10px;
+      left: -10px;
+      background-color: red;
+      color: white;
+      font-size: 13px;
+      width: 24px;
+      height: 24px;
+      border-radius: 50%;
+      text-align: center;
+      line-height: 24px;
+    }
+
+    .order-content {
+      flex: 1;
+    }
+
+    .order-title {
+      font-weight: bold;
+      margin: 0;
+    }
+
+    .order-note {
+      font-size: 14px;
+      color: #555;
+      margin-top: 4px;
+    }
+
+    .order-price {
+      font-weight: bold;
+      color: #333;
+      white-space: nowrap;
+      margin-left: 10px;
+    }
+
+    .total {
+      text-align: right;
+      font-weight: bold;
+      font-size: 18px;
+      margin-top: 20px;
+    }
+  </style>
 </head>
 <body>
 
 <div class="container">
-  <!-- Địa chỉ nhận hàng -->
+  <!-- Bên trái: Form -->
   <div class="form-left">
-    <h2>📍 Nhập địa chỉ giao hàng</h2>
-    <form action="xemdonhang.php" method="post">
-     <label for="sonha">Số nhà:</label>
-<input type="text" id="sonha" name="sonha" required>
-<small id="sonha-error" style="color:red; display:none;"></small>
+   
+      <h2>📋 Nhập thông tin nhận hàng</h2>
+<form action="xulydathang.php" method="post">
+  <label>Họ tên:</label>
+  <input type="text" name="hoten" required><br><br>
+
+  <label>Số điện thoại:</label>
+  <input type="text" name="sdt" required><br><br>
+      <label for="sonha">Số nhà:</label>
+      <input type="text" id="sonha" name="sonha" required>
 
       <label for="duong">Đường:</label>
       <select id="duong" name="duong" required>
@@ -136,7 +161,7 @@ $tong = 0;
 
       <label for="phuong">Phường:</label>
       <select id="phuong" name="phuong" required>
-        <option value="">-- Chọn phường --</option>
+         <option value="">-- Chọn phường --</option>
         <option value="Hưng Lợi">Hưng Lợi</option>
         <option value="An Khánh">An Khánh</option>
         <option value="Tân An">Tân An</option>
@@ -155,17 +180,16 @@ $tong = 0;
       </select>
 
       <label for="thanhpho">Thành phố:</label>
-      <select id="thanhpho" name="thanhpho" required>
-        <option value="Cần Thơ">Cần Thơ</option>
-      </select>
+      <input type="text" id="thanhpho" name="thanhpho" value="Cần Thơ">
 
-      <button type="submit" class="btn-submit">✅ XÁC NHẬN ĐẶT HÀNG</button>
+      <br><br>
+      <button class="submit-btn" type="submit">✅ XÁC NHẬN ĐẶT HÀNG</button>
     </form>
   </div>
 
-  <!-- Đơn hàng bên phải -->
+  <!-- Bên phải: Đơn hàng -->
   <div class="order-right">
-    <h2>Đơn hàng (<?= array_sum(array_column($donhang, 'soluong')) ?> sản phẩm)</h2>
+    <h2>🛒 Đơn hàng (<?= array_sum(array_column($donhang, 'soluong')) ?> sản phẩm)</h2>
 
     <?php if (empty($donhang)): ?>
       <p>Chưa có món nào trong giỏ hàng.</p>
@@ -191,27 +215,6 @@ $tong = 0;
     <?php endif; ?>
   </div>
 </div>
-
-
-<script>
-document.querySelector("form").addEventListener("submit", function(e) {
-  const input = document.getElementById("sonha");
-  const error = document.getElementById("sonha-error");
-
-  // Biểu thức chính quy: phải có ít nhất 1 số, và chỉ chứa ký tự hợp lệ
-  const regex = /^(?=.*\d)[0-9A-Za-z\s\/\-,]+$/;
-
-  if (!regex.test(input.value)) {
-    error.textContent = "Số nhà không hợp lệ! Vui lòng nhập lại ";
-    error.style.display = "block";
-    e.preventDefault(); // chặn gửi form nếu không hợp lệ
-  } else {
-    error.style.display = "none"; // ẩn thông báo nếu hợp lệ
-  }
-});
-</script>
-
-
 
 </body>
 </html>

@@ -1,25 +1,21 @@
 <?php
-include 'connect.php';
-$id = $_GET['id'] ?? 0;
+require 'connect.php';
 
-// Lấy đơn hàng
-$order_sql = "SELECT * FROM donhang WHERE id = $id";
-$order_result = mysqli_query($conn, $order_sql);
-$order = mysqli_fetch_assoc($order_result);
+$id = intval($_GET['id'] ?? 0);
+
+// Lấy đơn hàng vãng lai
+$sql = "SELECT * FROM donhang WHERE id = $id AND user_id IS NULL";
+$result = mysqli_query($conn, $sql);
+$order = mysqli_fetch_assoc($result);
 
 if (!$order) {
-    echo "<p style='color:red'>Không tìm thấy đơn hàng.</p>";
+    echo "<p style='color:red'>Không tìm thấy đơn hàng (hoặc không phải của khách vãng lai).</p>";
     exit;
 }
 
 // Gộp địa chỉ
 $diachi_parts = [$order['sonha'], $order['duong'], $order['phuong'], $order['quan'], $order['thanhpho']];
 $diachi = implode(', ', array_filter($diachi_parts));
-
-// Lấy thông tin người dùng
-$user_sql = "SELECT * FROM users WHERE id = " . $order['user_id'];
-$user_result = mysqli_query($conn, $user_sql);
-$user = mysqli_fetch_assoc($user_result);
 
 // Lấy chi tiết món ăn
 $ct_sql = "SELECT * FROM chitiet_donhang WHERE id_donhang = $id";
@@ -28,17 +24,6 @@ if (!$ct_result) {
     die("Lỗi truy vấn chi tiết đơn hàng: " . mysqli_error($conn));
 }
 ?>
-<?php
-if (isset($_GET['huy'])) {
-    if ($_GET['huy'] == '1') {
-        echo "<p style='color: green;'>✅ Đơn hàng đã được hủy thành công.</p>";
-    } else {
-        echo "<p style='color: red;'>❗Không thể hủy đơn hàng vì trạng thái không cho phép.</p>";
-    }
-}
-?>
-
-
 
 <!DOCTYPE html>
 <html lang="vi">
@@ -104,14 +89,11 @@ if (isset($_GET['huy'])) {
     <p><b>Tổng tiền:</b> <span style="color:#c40000; font-weight:bold;"><?= number_format($order['tongtien'], 0, ".", ".") ?>đ</span></p>
   </div>
 
-  <div class="section-title">👤 Khách Hàng</div>
+  <div class="section-title">👤 Thông Tin Khách Hàng</div>
   <div class="info-box">
-    <p><b>Họ tên:</b> <?= $user['hoten'] ?? 'Ẩn' ?></p>
-    <p><b>Số điện thoại:</b> <?= $user['sdt'] ?? 'Chưa có' ?></p>
-
-    <p><b>Email:</b> <?= $user['email'] ?? 'Ẩn' ?></p>
+    <p><b>Họ tên:</b> <?= $order['hoten'] ?></p>
+    <p><b>SĐT:</b> <?= $order['sdt'] ?></p>
     <p><b>Địa chỉ:</b> <?= $diachi ?></p>
-    <p><b>Điểm tích lũy:</b> <span style="color:red"><?= $user['diemtichluy'] ?? 0 ?> điểm</span></p>
   </div>
 
   <div class="section-title">🍲 Danh Sách Món Ăn</div>
@@ -122,10 +104,10 @@ if (isset($_GET['huy'])) {
       <th>Giá</th>
       <th>Thành tiền</th>
     </tr>
-    <?php if ($ct_result && mysqli_num_rows($ct_result) > 0): ?>
+    <?php if (mysqli_num_rows($ct_result) > 0): ?>
       <?php while ($row = mysqli_fetch_assoc($ct_result)): ?>
         <tr>
-          <td><?= $row['tenmon'] ?></td>
+          <td><?= htmlspecialchars($row['tenmon']) ?></td>
           <td><?= $row['soluong'] ?></td>
           <td><?= number_format($row['gia'], 0, ".", ".") ?>đ</td>
           <td><?= number_format($row['thanhtien'], 0, ".", ".") ?>đ</td>
@@ -137,30 +119,9 @@ if (isset($_GET['huy'])) {
   </table>
 
   <div class="notice">
-    ✅ Bạn được cộng điểm nếu không dùng ưu đãi.<br>
-    ❗ Nếu bạn dùng ưu đãi, điểm đã được trừ tương ứng và tổng tiền đã giảm.
+    ✅ Đây là đơn hàng khách vãng lai, không tích điểm.<br>
+    ❗ Nếu có thắc mắc, vui lòng liên hệ hotline hỗ trợ.
   </div>
-
-
-  <?php
-$trangthai = $order['trangthai'];
-$choPhepHuy = in_array($trangthai, ['Đang chờ xác nhận', 'Đã xác nhận']);
-?>
-
-<div style="margin-top: 20px;">
- <button 
-  onclick="huyDon(<?= $order['id'] ?>)" 
-  style="padding:10px 20px; border:none; border-radius:5px; color:#fff; <?= $choPhepHuy ? 'background-color:#dc3545; cursor:pointer;' : 'background-color:#aaa; cursor:not-allowed;' ?>" 
-  <?= $choPhepHuy ? '' : 'disabled' ?>>
-  ❌ Hủy đơn hàng
-</button>
-
-<?php if (!$choPhepHuy): ?>
-  <p style="color:gray; margin-top:5px;">Bạn không thể hủy đơn hàng ở trạng thái hiện tại.</p>
-<?php endif; ?>
-</div>
-
-
 
 </body>
 </html>

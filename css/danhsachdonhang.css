@@ -39,3 +39,7 @@
 .btn.btn-info:hover {
   background-color: #138496;
 }
+.order-status.failed {
+  background-color: #f44336; /* đỏ */
+  color: white;
+}

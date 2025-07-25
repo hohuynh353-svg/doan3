@@ -11,14 +11,26 @@ if (!isset($_SESSION['user_id'])) {
 $userId = $_SESSION['user_id'];
 $donhang = $_SESSION['donhang'] ?? [];
 
+// Kiểm tra giỏ hàng không rỗng
 if (empty($donhang)) {
     echo "Không có món nào để đặt hàng.";
     exit;
 }
 
-// Lưu địa chỉ vào session
+// Kiểm tra và lưu địa chỉ vào session
+$sonha = $_POST['sonha'] ?? '';
+
+// Hàm kiểm tra số nhà hợp lệ
+function laSoNhaHopLe($sonha) {
+    return preg_match('/^(?=.*\d)[0-9A-Za-z\s\/\-,]+$/', $sonha);
+}
+
+if (!laSoNhaHopLe($sonha)) {
+    die("⚠️ Số nhà không hợp lệ! Vui lòng quay lại và nhập đúng định dạng.");
+}
+
 $_SESSION['diachi'] = [
-    'sonha' => $_POST['sonha'],
+    'sonha' => $sonha,
     'duong' => $_POST['duong'],
     'phuong' => $_POST['phuong'],
     'quan' => $_POST['quan'],
@@ -35,13 +47,15 @@ foreach ($donhang as $mon) {
 $ghichu = $_POST['ghichu'] ?? '';
 $uudai = $_POST['uudai'] ?? 0;
 
-// Lấy điểm tích lũy hiện tại
-$stmt = $conn->prepare("SELECT diemtichluy FROM users WHERE id = ?");
+// Lấy điểm tích lũy & số điện thoại
+$stmt = $conn->prepare("SELECT diemtichluy, sdt FROM users WHERE id = ?");
 $stmt->bind_param("i", $userId);
 $stmt->execute();
 $result = $stmt->get_result();
 $user = $result->fetch_assoc();
+
 $diemHienTai = (int) $user['diemtichluy'];
+$sdt = $user['sdt'] ?? '';
 
 // Tính giảm giá
 $phanTramGiam = 0;
@@ -62,24 +76,33 @@ if ($phanTramGiam > 0) {
     $tongtien = round($tongtien * (1 - $phanTramGiam / 100));
 }
 
-// Lưu đơn hàng vào bảng `donhang`
-$stmt = $conn->prepare("INSERT INTO donhang (user_id, tongtien, ghichu, trangthai, thoigian, sonha, duong, phuong, quan, thanhpho)
-VALUES (?, ?, ?, 'Chờ xử lý', NOW(), ?, ?, ?, ?, ?)");
-$stmt->bind_param("iissssss",
+// Lưu đơn hàng vào bảng `donhang` (đã thêm sdt)
+$trangthai = 'Đang chờ xác nhận';
+
+$stmt = $conn->prepare("INSERT INTO donhang 
+(user_id, sdt, tongtien, ghichu, trangthai, thoigian, sonha, duong, phuong, quan, thanhpho)
+VALUES (?, ?, ?, ?, ?, NOW(), ?, ?, ?, ?, ?)");
+
+$stmt->bind_param("isisssssss",
     $userId,
+    $sdt,
     $tongtien,
     $ghichu,
-    $_POST['sonha'],
+    $trangthai,
+    $sonha,
     $_POST['duong'],
     $_POST['phuong'],
     $_POST['quan'],
     $_POST['thanhpho']
 );
+
 $stmt->execute();
 $donhang_id = $conn->insert_id;
 
-// Lưu từng món vào bảng `chitiet_donhang`
-$stmt_ct = $conn->prepare("INSERT INTO chitiet_donhang (id_donhang, tenmon, soluong, gia, thanhtien) VALUES (?, ?, ?, ?, ?)");
+// Lưu chi tiết món ăn
+$stmt_ct = $conn->prepare("INSERT INTO chitiet_donhang 
+(id_donhang, tenmon, soluong, gia, thanhtien) VALUES (?, ?, ?, ?, ?)");
+
 foreach ($donhang as $mon) {
     $tenmon = $mon['tenmon'];
     $soluong = $mon['soluong'];
@@ -108,3 +131,4 @@ unset($_SESSION['donhang']);
 // Chuyển đến trang xác nhận
 header("Location: diemkhachhang.php?donhang_id=$donhang_id");
 exit;
+?>
